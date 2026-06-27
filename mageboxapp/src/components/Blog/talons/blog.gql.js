@@ -14,6 +14,11 @@ export const GET_BLOG_POSTS = gql`
                 publish_date
             }
             total_count
+            page_info {
+                current_page
+                page_size
+                total_pages
+            }
         }
     }
 `;

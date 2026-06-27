@@ -1,54 +1,83 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useLazyQuery } from '@apollo/client';
 
-import { useAwaitQuery } from '@magento/peregrine/lib/hooks/useAwaitQuery';
+import { usePagination } from '@magento/peregrine/lib/hooks/usePagination';
 
-import { GET_BLOG_POSTS } from '../../../components/Blog/talons/blog.gql';
+import { GET_BLOG_POSTS } from './blog.gql';
 
 export const useBlog = () => {
-    const fetchPosts = useAwaitQuery(GET_BLOG_POSTS);
+    const history = useHistory();
 
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const [posts, setPosts] = useState([]);
+    const pageSize = 12;
 
-    useEffect(() => {
-        let mounted = true;
+    // Venia pagination
+    const [paginationValues, paginationApi] = usePagination();
 
-        const loadPosts = async () => {
-            try {
-                const { data } = await fetchPosts({
-                    variables: {
-                        pageSize: 10,
-                        currentPage: 5
-                    }
-                });
-                if (mounted) {
-                    setPosts(data.blogPosts.items);
-                }
-            } catch (err) {
-                if (mounted) {
-                    setError(err);
-                }
-            } finally {
-                if (mounted) {
-                    setLoading(false);
-                }
-            }
-        };
+    const { currentPage, totalPages } = paginationValues;
+    const { setCurrentPage, setTotalPages } = paginationApi;
 
-        loadPosts();
-
-        return () => {
-            mounted = false;
-        };
-    }, [fetchPosts]);
-
-    return useMemo(
-        () => ({
+    // Apollo query
+    const [
+        runQuery,
+        {
+            called,
             loading,
             error,
-            posts
+            data
+        }
+    ] = useLazyQuery(GET_BLOG_POSTS, {
+        fetchPolicy: 'cache-and-network',
+        nextFetchPolicy: 'cache-first'
+    });
+
+    /**
+     * Load posts whenever page changes
+     */
+    useEffect(() => {
+        runQuery({
+            variables: {
+                pageSize,
+                currentPage
+            }
+        });
+    }, [runQuery, currentPage]);
+
+    /**
+     * Update total pages from GraphQL response
+     */
+    useEffect(() => {
+        if (!data?.blogPosts?.page_info) {
+            return;
+        }
+        setTotalPages(data.blogPosts.page_info.total_pages);
+
+        return () => {
+            setTotalPages(null);
+        };
+    }, [data, setTotalPages]);
+
+    /**
+     * Optional: Sync URL with current page
+     */
+    useEffect(() => {
+        history.replace(`/blog?page=${currentPage}`);
+    }, [currentPage, history]);
+
+    const pageControl = useMemo(
+        () => ({
+            currentPage,
+            totalPages,
+            setPage: setCurrentPage
         }),
-        [loading, error, posts]
+        [currentPage, totalPages, setCurrentPage]
     );
+
+    return {
+        loading: called ? loading : true,
+        error,
+        posts: data?.blogPosts?.items || [],
+        totalCount: data?.blogPosts?.total_count || 0,
+        pageControl
+    };
 };
