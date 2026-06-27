@@ -21,3 +21,21 @@ docker/certs
 
 ## May temporarily create tarballs during scaffolding debug
 packages/**/*.tgz
+
+
+.dockerignore
+.editorconfig
+.eslintignore
+.eslintrc.js
+.npmrc
+.prettierignore
+.yarnrc
+CHANGELOG.md
+CREATE_RELEASE_NOTES.md
+global.d.ts
+jest.config.js
+lerna.json
+images
+pwa-devdocs
+dev.dockerfile
+
