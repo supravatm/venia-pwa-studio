@@ -35,7 +35,8 @@ CREATE_RELEASE_NOTES.md
 global.d.ts
 jest.config.js
 lerna.json
-images
-pwa-devdocs
+images/
+docker/
+pwa-devdocs/
 dev.dockerfile
 
