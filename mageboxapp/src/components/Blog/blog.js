@@ -1,34 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-<<<<<<< HEAD
-import { FormattedMessage } from 'react-intl';
-import { useBlog } from './talons/useBlog';
-=======
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useBlog } from './talons/useBlog';
 import LoadingIndicator from '@magento/venia-ui/lib/components/LoadingIndicator';
->>>>>>> 6f6853d1 (blog : add dynamic page title)
 import classes from './blog.module.css';
 import Pagination from '@magento/venia-ui/lib/components/Pagination';
-import LoadingIndicator from '@magento/venia-ui/lib/components/LoadingIndicator';
 
 const Blog = () => {
     const { loading, error, posts, pageControl, handlePageChange } = useBlog();
-<<<<<<< HEAD
-    
-=======
     const { formatMessage } = useIntl();
->>>>>>> 6f6853d1 (blog : add dynamic page title)
     if (loading) {
         return (
             <LoadingIndicator global>
                 <FormattedMessage
                     id={'loadingIndicator.message'}
-<<<<<<< HEAD
-                    defaultMessage="Fatching Data..."
-=======
                     defaultMessage="Fatching Blogs..."
->>>>>>> 6f6853d1 (blog : add dynamic page title)
                 />
             </LoadingIndicator>
         );
