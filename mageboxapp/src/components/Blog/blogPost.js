@@ -1,23 +1,39 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+import { FormattedMessage, useIntl } from 'react-intl';
 import { useBlogPost } from './talons/useBlogPost';
-
+import LoadingIndicator from '@magento/venia-ui/lib/components/LoadingIndicator';
 import classes from './blog.module.css';
 
 const BlogPost = () => {
     const { loading, error, post } = useBlogPost();
-    
+    const { formatMessage } = useIntl();
     if (loading) {
-        return <div className={classes.message}>Loading...</div>;
+        return (
+            <LoadingIndicator global>
+                <FormattedMessage
+                    id={'loadingIndicator.message'}
+                    defaultMessage="Fatching Data..."
+                />
+            </LoadingIndicator>
+        );
     }
 
     if (error) {
-        return <div className={classes.message}>Unable to load post.</div>;
+        return <div className={classes.message}>
+            <FormattedMessage
+                id={'loadingIndicator.errorMessage'}
+                defaultMessage="Unable to load post."
+            /></div>;
     }
 
     if (!post) {
-        return <div className={classes.message}>Post not found.</div>;
+        return <div className={classes.message}>
+            <FormattedMessage
+                id={'loadingIndicator.errorMessage'}
+                defaultMessage="Post not found."
+            />
+        </div>;
     }
 
     return (
@@ -27,7 +43,10 @@ const BlogPost = () => {
                 to="/blog"
                 className={classes.back}
             >
-                ← Back to Blog
+                <FormattedMessage
+                    id={'blog.backMessage'}
+                    defaultMessage="← Back to Blog"
+                />
             </Link>
 
             <h1 className={classes.title}>
