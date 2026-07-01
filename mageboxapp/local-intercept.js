@@ -17,6 +17,8 @@
  * or modify functionality from its dependencies.
  */
 
+const { Targetables } = require('@magento/pwa-buildpack');
+
 function localIntercept(targets) {
     const veniaTargets = targets.of('@magento/venia-ui');
 
@@ -66,6 +68,22 @@ function localIntercept(targets) {
         });
         return routes;
     });
+
+    // header injection
+    const targetables = Targetables.using(targets);
+
+    const Header = targetables.reactComponent(
+        '@magento/venia-ui/lib/components/Header/header.js'
+    );
+
+    Header.addImport(`
+        import BlogLink from '${require.resolve('./src/components/Blog/BlogLink')}';
+    `);
+
+    Header.insertBeforeJSX(
+        'AccountTrigger',
+        '<BlogLink />'
+    );
 }
 
 module.exports = localIntercept;
