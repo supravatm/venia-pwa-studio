@@ -51,10 +51,6 @@ export const useBlog = () => {
             return;
         }
         setTotalPages(data.blogPosts.page_info.total_pages);
-
-        return () => {
-            setTotalPages(null);
-        };
     }, [data, setTotalPages]);
 
     /**

@@ -7,7 +7,7 @@ import classes from './blog.module.css';
 import Pagination from '@magento/venia-ui/lib/components/Pagination';
 
 const Blog = () => {
-    const { loading, error, posts, pageControl, handlePageChange } = useBlog();
+    const { loading, error, posts, pageControl } = useBlog();
     const { formatMessage } = useIntl();
     if (loading) {
         return (
