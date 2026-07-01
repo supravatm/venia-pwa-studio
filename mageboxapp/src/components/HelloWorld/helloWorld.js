@@ -1,19 +1,21 @@
 // import React from 'react';
 import React, { useState } from 'react';
-
+import { useCmsBlock } from './telons/useCmsBlock';
+import RichContent from '@magento/venia-ui/lib/components/RichContent';
 
 const HelloWorld = () => {
 
     const [showMessage, setShowMessage] = useState(false);
-
+    const { block } = useCmsBlock();
     const handleButtonClick = () => {
         // setShowMessage(true);
         setShowMessage(prevState => !prevState);
     };
+    console.log("useCmsBlock", block);
     return (
         <div style={{ padding: '20px' }}>
-            <h1>Hello World</h1>
-
+            <h1>{block.title}</h1>
+            <RichContent html={block.content} />
             {showMessage && (
                 <p style={{ marginTop: '15px' }}>
                     Welcome to PWA Studio
