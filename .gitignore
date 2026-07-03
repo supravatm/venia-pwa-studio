@@ -22,7 +22,6 @@ docker/certs
 ## May temporarily create tarballs during scaffolding debug
 packages/**/*.tgz
 
-
 .dockerignore
 .editorconfig
 .eslintignore
@@ -39,4 +38,4 @@ images/
 docker/
 pwa-devdocs/
 dev.dockerfile
-
+package-lock.json
