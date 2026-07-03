@@ -1,0 +1,31 @@
+services:
+  pwa:
+    build:
+      context: .
+      dockerfile: dev.dockerfile
+    working_dir: /usr/src/app
+    command: ["yarn", "workspace", "mageboxapp", "run", "watch"]
+    volumes:
+      - ./:/usr/src/app
+      - pwa_node_modules:/usr/src/app/node_modules
+      - pwa_yarn_cache:/usr/local/share/.cache/yarn
+    ports:
+      - "10000:10000"
+    environment:
+      NODE_OPTIONS: --openssl-legacy-provider
+      NODE_ENV: development
+      DEV_SERVER_PORT: "10000"
+      PWA_STUDIO_SKIP_DEV_CERT: "true"
+      MAGENTO_BACKEND_URL: "https://magento-devbox.me/"
+      MAGENTO_BACKEND_EDITION: "MOS"
+      CHOKIDAR_USEPOLLING: "true"
+      WATCHPACK_POLLING: "true"
+      STAGING_BUILD_ENABLED: "false"
+      IMAGE_OPTIMIZING_ORIGIN: "backend"
+    extra_hosts:
+      - "magento-devbox.me:host-gateway"
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped
+volumes:
+  pwa_node_modules:
+  pwa_yarn_cache:

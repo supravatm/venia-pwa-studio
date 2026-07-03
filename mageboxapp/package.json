@@ -1,5 +1,5 @@
 {
-  "name": "magento-magebox-venia-app",
+  "name": "mageboxapp",
   "private": true,
   "version": "0.0.1",
   "description": "A new project based on @magento/venia-concept",
@@ -19,7 +19,7 @@
     "prettier:fix": "yarn run -s prettier -- --write",
     "start": "buildpack serve .",
     "start:debug": "node --inspect-brk ./node_modules/.bin/webpack-dev-server --progress --color --env.mode development",
-    "watch": "webpack-dev-server --progress --color --env.mode development",
+    "watch": "webpack-dev-server --progress --color --env.mode development --host 0.0.0.0 --port 10000",
     "storybook": "start-storybook -p 9001 -c src/.storybook",
     "storybook:build": "build-storybook -c src/.storybook -o storybook-dist"
   },
