@@ -13,7 +13,7 @@ const Blog = () => {
         return (
             <LoadingIndicator global>
                 <FormattedMessage
-                    id={'loadingIndicator.message'}
+                    id={'blog.loadingIndicatorMessage'}
                     defaultMessage="Fatching Blogs..."
                 />
             </LoadingIndicator>
@@ -24,7 +24,7 @@ const Blog = () => {
         return (
             <div className={classes.message}>
                 <FormattedMessage
-                    id={'loadingIndicator.errorMessage'}
+                    id={'blog.loadingIndicatorErrorMessage'}
                     defaultMessage="Something went wrong while loading blog posts."
                 />
             </div>
@@ -35,7 +35,7 @@ const Blog = () => {
         return (
             <div className={classes.message}>
                 <FormattedMessage
-                    id={'loadingIndicator.errorMessage'}
+                    id={'blog.loadingIndicatorNotFound'}
                     defaultMessage="No blog posts found."
                 />
             </div>
