@@ -1,0 +1,12 @@
+{
+  "name": "my-extension",
+  "version": "1.0.0",
+  "main": "src/targets/wrapper.js",
+  "description": "A PWA Studio extension",
+  "license": "MIT",
+  "pwa-studio": {
+    "targets": {
+      "intercept": "src/targets/my-intercept"
+    }
+  }
+}
