@@ -14,6 +14,8 @@ import resourceUrl from '@magento/peregrine/lib/util/makeUrl';
 
 
 const Footer = props => {
+
+    console.log("supravat : footer");
     const { links } = props;
     const classes = useStyle(defaultClasses, props.classes);
     const talonProps = useFooter();
@@ -59,16 +61,18 @@ const Footer = props => {
     return (
         <footer data-cy="Footer-root" className={classes.root}>
             <div className={classes.links}>
-                {linkGroups}
                 <div className={classes.callout}>
                     <span
                         data-cy="Footer-calloutHeading"
                         className={classes.calloutHeading}
                     >
-                        <FormattedMessage
-                            id={'footer.followText'}
-                            defaultMessage={'Follow Us!'}
-                        />
+                        <Link
+                            to={resourceUrl('/')}
+                            aria-label={title}
+                            className={classes.logoContainer}
+                        >
+                            <Logo classes={{ logo: classes.logo }} />
+                        </Link>
                     </span>
                     <p
                         data-cy="Footer-calloutText"
@@ -90,7 +94,9 @@ const Footer = props => {
                             <Twitter size={20} />
                         </li>
                     </ul>
+
                 </div>
+                {linkGroups}
                 <Newsletter />
             </div>
             <div className={classes.branding}>
@@ -109,13 +115,6 @@ const Footer = props => {
                     </li>
                 </ul>
                 <p className={classes.copyright}>{copyrightText || null}</p>
-                <Link
-                    to={resourceUrl('/')}
-                    aria-label={title}
-                    className={classes.logoContainer}
-                >
-                    <Logo classes={{ logo: classes.logo }} />
-                </Link>
             </div>
         </footer>
     );
