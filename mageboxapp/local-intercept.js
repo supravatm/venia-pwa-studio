@@ -20,6 +20,12 @@
 const { Targetables } = require('@magento/pwa-buildpack');
 
 function localIntercept(targets) {
+    // Change static assets directory
+    targets.of('@magento/pwa-buildpack').transformUpward.tap(def => {
+        def.staticFromRoot.inline.body.file.template.inline =
+            './static-assets/{{ filename }}';
+    });
+
     const veniaTargets = targets.of('@magento/venia-ui');
 
     veniaTargets.routes.tap(routes => {

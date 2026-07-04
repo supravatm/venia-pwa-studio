@@ -17,3 +17,41 @@
 status: veniaResponse.status
 headers: veniaResponse.headers
 body: veniaResponse.body
+
+myStaticIncludes:
+  resolver: directory
+  directory:
+    resolver: inline
+    inline: './static-assets'
+faviconRoute:
+  when:
+    - matches: request.url.pathname
+      pattern: ^/favicon\.ico$
+  resolver: faviconFile
+
+faviconFile:
+  resolver: file
+  file: myStaticIncludes/favicon.ico
+  mimeType: image/x-icon
+
+manifestFile:
+  resolver: file
+  file: myStaticIncludes/manifest.json
+  mimeType: application/manifest+json
+
+robotsFile:
+  resolver: file
+  file: myStaticIncludes/robots.txt
+  mimeType: text/plain
+
+manifestRoute:
+  when:
+    - matches: request.url.pathname
+      pattern: ^/manifest\.json$
+  resolver: manifestFile
+
+robotsRoute:
+  when:
+    - matches: request.url.pathname
+      pattern: ^/robots\.txt$
+  resolver: robotsFile
