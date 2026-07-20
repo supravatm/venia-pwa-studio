@@ -1,0 +1,41 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Build output
+dist/
+build/
+coverage/
+
+# PWA Studio generated files
+storefront/.cache/
+storefront/.yarn/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# OS files
+.DS_Store
+
+# IDE
+.idea/
+.vscode/
+
+# Docker runtime
+docker/*.pid
+
+# Certificates (local only)
+docker/certs/*.key
+docker/certs/*.pem
+
+# Temporary files
+*.tmp
+*.swp

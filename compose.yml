@@ -1,0 +1,46 @@
+services:
+  nginx-proxy:
+    image: jwilder/nginx-proxy:alpine
+    ports:
+      - "${DEV_SERVER_PORT}:443"
+    volumes:
+      - ./docker/certs:/etc/nginx/certs
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    restart: unless-stopped
+    depends_on:
+      - pwa
+
+  pwa:
+    build:
+      context: .
+      dockerfile: docker/dev.dockerfile
+    working_dir: /usr/src/app/storefront
+    volumes:
+      - ./:/usr/src/app
+      - pwa_node_modules:/usr/src/app/node_modules
+      - pwa_yarn_cache:/usr/local/share/.cache/yarn
+    expose:
+      - "${DEV_SERVER_PORT}"
+    environment:
+      VIRTUAL_HOST: ${VIRTUAL_HOST}
+      VIRTUAL_PORT: ${DEV_SERVER_PORT}
+      NODE_OPTIONS: ${NODE_OPTIONS}
+      NODE_ENV: ${NODE_ENV}
+      DEV_SERVER_PORT: ${DEV_SERVER_PORT}
+      DEV_SERVER_HOST: ${DEV_SERVER_HOST}
+      PWA_STUDIO_SKIP_DEV_CERT: ${PWA_STUDIO_SKIP_DEV_CERT}
+      MAGENTO_BACKEND_URL: ${MAGENTO_BACKEND_URL}
+      MAGENTO_BACKEND_EDITION: ${MAGENTO_BACKEND_EDITION}
+      CHOKIDAR_USEPOLLING: ${CHOKIDAR_USEPOLLING}
+      WATCHPACK_POLLING: ${WATCHPACK_POLLING}
+      STAGING_BUILD_ENABLED: ${STAGING_BUILD_ENABLED}
+      IMAGE_OPTIMIZING_ORIGIN: ${IMAGE_OPTIMIZING_ORIGIN}
+    extra_hosts:
+      - "${MAGENTO_HOST}:host-gateway"
+      - "${HOST_DOCKER_INTERNAL}:host-gateway"
+    restart: unless-stopped
+
+
+volumes:
+  pwa_node_modules:
+  pwa_yarn_cache:
