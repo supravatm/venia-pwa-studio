@@ -1,0 +1,11 @@
+{
+    "newsletter.titleText": "Newsletter",
+    "blog.loadingIndicatorMessage": "Fatching Blogs...",
+    "blog.loadingIndicatorErrorMessage": "Something went wrong while loading blog posts.",
+    "blog.loadingIndicatorNotFoundMessage": "No blog posts found.",
+    "blog.pageTitle": "My Blogs",
+    "blog.pageDescription": "Discover the latest articles, updates and insights.",
+    "blog.readMore": "Read More →",
+    "block.blogLink": "Blog",
+    "blog.backMessage": "← Back to Blog"
+}
