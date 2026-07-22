@@ -8,7 +8,8 @@ services:
       - /var/run/docker.sock:/tmp/docker.sock:ro
     restart: unless-stopped
     depends_on:
-      - pwa
+      pwa:
+        condition: service_healthy
 
   pwa:
     build:
@@ -39,6 +40,16 @@ services:
       - "${MAGENTO_HOST}:host-gateway"
       - "${HOST_DOCKER_INTERNAL}:host-gateway"
     restart: unless-stopped
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "wget -q --spider http://127.0.0.1:${DEV_SERVER_PORT} || exit 1"
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 60s
 
 
 volumes:
