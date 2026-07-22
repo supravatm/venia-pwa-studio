@@ -30,6 +30,7 @@
   "dependencies": {
     "@magento/experience-platform-connector": "~1.0.13",
     "@magento/pwa-buildpack": "~11.5.3",
+    "@magento/venia-sample-payments-checkmo": "^0.0.20",
     "dompurify": "~3.2.4"
   },
   "devDependencies": {
